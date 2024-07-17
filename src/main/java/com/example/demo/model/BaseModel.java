@@ -1,4 +1,4 @@
-package com.example.demo.entity;
+package com.example.demo.model;
 
 import java.util.Date;
 
@@ -8,7 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public abstract class BaseEntity {
+public abstract class BaseModel {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

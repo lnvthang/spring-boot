@@ -1,4 +1,4 @@
-package com.example.demo.entity;
+package com.example.demo.model;
 
 import java.util.Date;
 
@@ -7,7 +7,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "User")
-public class UserEntity extends BaseEntity {
+public class UserModel extends BaseModel {
 
 	private String username;
 
