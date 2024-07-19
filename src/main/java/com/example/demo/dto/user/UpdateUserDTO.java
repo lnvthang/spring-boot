@@ -1,9 +1,14 @@
 package com.example.demo.dto.user;
 
+import jakarta.validation.constraints.NotBlank;
+
 import java.util.Date;
 
 public class UpdateUserDTO {
+    @NotBlank(message = "Email is mandatory")
     private String gmail;
+
+    @NotBlank(message = "Full name is mandatory")
     private String fullname;
     private Date dob;
     private Boolean status;

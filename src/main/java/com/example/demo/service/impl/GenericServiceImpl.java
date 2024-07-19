@@ -3,14 +3,13 @@ package com.example.demo.service.impl;
 import java.util.List;
 import java.util.Optional;
 
-import com.example.demo.repository.user.IUserRepository;
 import com.example.demo.service.IGenericService;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.example.demo.repository.IGenericRepository;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.model.UserModel;
-import com.example.demo.repository.IGenericRepository;
-
+@Service
 public class GenericServiceImpl<T, ID> implements IGenericService<T, ID> {
 	
 	@Autowired

@@ -1,19 +1,17 @@
 package com.example.demo.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.example.demo.dto.BaseResponse;
 import com.example.demo.dto.user.*;
 import com.example.demo.service.impl.UserServiceImpl;
+import com.example.demo.util.Validations;
+import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.model.UserModel;
-
-import static com.example.demo.util.Constants.IS_DELETED;
-import static com.example.demo.util.Constants.WORKING;
 
 @RestController
 @RequestMapping("/api/user")
@@ -22,78 +20,92 @@ public class UserController {
 	@Autowired
 	private UserServiceImpl userService;
 
+	@Autowired
+	private Validations validations;
+
 
 	@GetMapping
 	public BaseResponse<List<UserModel>> getUsersList() {
+		BaseResponse<List<UserModel>> response = new BaseResponse<>();
 		try {
-			BaseResponse<List<UserModel>> response = new BaseResponse<>();
 			List<UserModel> data = userService.findAll();
 			if (!data.isEmpty()) {
 				response.setData(data);
-				response.setMessage("Successful");
-				response.setStatus(200L);
 			}
-			else {
-				response.setMessage("Failed");
-				response.setStatus(500L);
-			}
-			return response;
+			response.setMessage("Successful");
+			response.setStatus(200L);
 		} catch (Exception e) {
-            throw new RuntimeException(e);
+			response.setMessage(e.getMessage());
+			response.setStatus(500L);
         }
+		return response;
 	}
 
 	@GetMapping("/{id}")
 	public BaseResponse<UserModel> getUserById(@PathVariable Long id) {
+		BaseResponse<UserModel> response = new BaseResponse<>();
 		try {
-			BaseResponse<UserModel> response = new BaseResponse<>();
-			UserModel data = userService.findById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build()).getBody();
+			UserModel data = userService.findById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build()).getBody();;
             response.setData(data);
             response.setMessage("Successful");
             response.setStatus(200L);
-			return response;
         } catch (Exception e) {
-			throw new RuntimeException(e);
+			response.setMessage(e.getMessage());
+			response.setStatus(500L);
 		}
+		return response;
 	}
 
 	@PostMapping
-	public UserModel createUser(@RequestBody CreateUserDTO userDTO) {
-		UserModel createUser = new UserModel();
-		createUser.setUsername(userDTO.getUsername());
-		createUser.setPassword(userDTO.getPassword());
-		createUser.setGmail(userDTO.getGmail());
-		createUser.setFullname(userDTO.getFullname());
-		createUser.setDob(userDTO.getDob());
-		createUser.setIs_deleted(IS_DELETED);
-		createUser.setStatus(WORKING);
-		return userService.save(createUser);
+	public BaseResponse<UserModel> createUser(@RequestBody CreateUserDTO userDTO) {
+		BaseResponse<UserModel> response = new BaseResponse<>();
+		try {
+			if (validations.isEmailValid(userDTO.getGmail())) {
+				throw new ValidationException("Email is not valid");
+			}
+			UserModel data = userService.createUser(userDTO);
+			response.setData(data);
+			response.setMessage("Successful");
+			response.setStatus(200L);
+		} catch (Exception e) {
+			response.setMessage(e.getMessage());
+			response.setStatus(500L);
+		}
+		return response;
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<UserModel> updateUser(@PathVariable Long id, @RequestBody UpdateUserDTO userDTO) {
-		Optional<UserModel> user = userService.findById(id);
-		if (user.isPresent()) {
-			UserModel updatedUser = user.get();
-			updatedUser.setGmail(userDTO.getGmail());
-			updatedUser.setFullname(userDTO.getFullname());
-			updatedUser.setDob(userDTO.getDob());
-			updatedUser.setStatus(userDTO.getStatus());
-			updatedUser.setIs_deleted(userDTO.getIs_delete());
-			return ResponseEntity.ok(userService.save(updatedUser));
-		} else {
-			return ResponseEntity.notFound().build();
+	public BaseResponse<UserModel> updateUser(@PathVariable Long id, @RequestBody UpdateUserDTO userDTO) {
+		BaseResponse<UserModel> response = new BaseResponse<>();
+		try {
+			if (validations.isEmailValid(userDTO.getGmail())) {
+				throw new ValidationException("Email is not valid");
+			}
+			UserModel data = userService.updateUser(id, userDTO);
+			response.setData(data);
+			response.setMessage("Successful");
+			response.setStatus(200L);
+			return response;
+		} catch (Exception e) {
+			response.setMessage(e.getMessage());
+			response.setStatus(500L);
 		}
+		return response;
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-		Optional<UserModel> user = userService.findById(id);
-		if (user.isPresent()) {
-			userService.delete(id);
-			return ResponseEntity.noContent().build();
-		} else {
-			return ResponseEntity.notFound().build();
+	public BaseResponse<Boolean> deleteUser(@PathVariable Long id) {
+		BaseResponse<Boolean> response = new BaseResponse<>();
+		try {
+			Boolean data = userService.deleteUser(id);
+			response.setData(data);
+			response.setMessage("Successful");
+			response.setStatus(200L);
+			return response;
+		} catch (Exception e) {
+			response.setMessage(e.getMessage());
+			response.setStatus(500L);
 		}
+		return response;
 	}
 }

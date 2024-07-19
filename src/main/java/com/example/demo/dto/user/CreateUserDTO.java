@@ -1,12 +1,23 @@
 package com.example.demo.dto.user;
 
+import jakarta.validation.constraints.NotBlank;
+
 import java.util.Date;
 
 public class CreateUserDTO {
+
+    @NotBlank(message = "Username is mandatory")
     private String username;
+
+    @NotBlank(message = "Password is mandatory")
     private String password;
+
+    @NotBlank(message = "Email is mandatory")
     private String gmail;
+
+    @NotBlank(message = "Full name is mandatory")
     private String fullname;
+
     private Date dob;
     private Boolean status;
     private Long is_deleted;
