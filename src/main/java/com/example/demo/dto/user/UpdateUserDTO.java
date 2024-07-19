@@ -5,13 +5,17 @@ import jakarta.validation.constraints.NotBlank;
 import java.util.Date;
 
 public class UpdateUserDTO {
-    @NotBlank(message = "Email is mandatory")
+
+    @NotBlank(message = "Gmail is mandatory")
     private String gmail;
 
     @NotBlank(message = "Full name is mandatory")
-    private String fullname;
+    private String full_name;
+
     private Date dob;
+
     private Boolean status;
+
     private Long is_delete;
 
     public String getGmail() {
@@ -22,12 +26,12 @@ public class UpdateUserDTO {
         this.gmail = gmail;
     }
 
-    public String getFullname() {
-        return fullname;
+    public String getFull_name() {
+        return full_name;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setFull_name(String full_name) {
+        this.full_name = full_name;
     }
 
     public Date getDob() {

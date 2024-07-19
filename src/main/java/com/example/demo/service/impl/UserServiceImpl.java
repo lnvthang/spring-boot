@@ -34,7 +34,7 @@ public class UserServiceImpl {
         createUser.setUsername(userDTO.getUsername());
         createUser.setPassword(userDTO.getPassword());
         createUser.setGmail(userDTO.getGmail());
-        createUser.setFullname(userDTO.getFullname());
+        createUser.setFull_name(userDTO.getFull_name());
         createUser.setDob(userDTO.getDob());
         createUser.setIs_deleted(IS_DELETED);
         createUser.setStatus(WORKING);
@@ -46,7 +46,7 @@ public class UserServiceImpl {
         if (user.isPresent()) {
             UserModel updatedUser = user.get();
             updatedUser.setGmail(userDTO.getGmail());
-            updatedUser.setFullname(userDTO.getFullname());
+            updatedUser.setFull_name(userDTO.getFull_name());
             updatedUser.setDob(userDTO.getDob());
             updatedUser.setStatus(userDTO.getStatus());
             updatedUser.setIs_deleted(userDTO.getIs_delete());

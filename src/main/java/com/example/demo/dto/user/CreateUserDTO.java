@@ -12,31 +12,17 @@ public class CreateUserDTO {
     @NotBlank(message = "Password is mandatory")
     private String password;
 
-    @NotBlank(message = "Email is mandatory")
+    @NotBlank(message = "Gmail is mandatory")
     private String gmail;
 
     @NotBlank(message = "Full name is mandatory")
-    private String fullname;
+    private String full_name;
 
     private Date dob;
+
     private Boolean status;
+
     private Long is_deleted;
-
-    public Boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(Boolean status) {
-        this.status = status;
-    }
-
-    public Long getIs_deleted() {
-        return is_deleted;
-    }
-
-    public void setIs_deleted(Long is_deleted) {
-        this.is_deleted = is_deleted;
-    }
 
     public String getUsername() {
         return username;
@@ -62,12 +48,12 @@ public class CreateUserDTO {
         this.gmail = gmail;
     }
 
-    public String getFullname() {
-        return fullname;
+    public String getFull_name() {
+        return full_name;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setFull_name(String full_name) {
+        this.full_name = full_name;
     }
 
     public Date getDob() {
@@ -78,4 +64,19 @@ public class CreateUserDTO {
         this.dob = dob;
     }
 
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public Long getIs_deleted() {
+        return is_deleted;
+    }
+
+    public void setIs_deleted(Long is_deleted) {
+        this.is_deleted = is_deleted;
+    }
 }

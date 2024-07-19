@@ -6,7 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "User")
+@Table(name = "user")
 public class UserModel extends BaseModel {
 
 	private String username;
@@ -15,7 +15,7 @@ public class UserModel extends BaseModel {
 
 	private String gmail;
 
-	private String fullname;
+	private String full_name;
 
 	private Date dob;
 
@@ -43,12 +43,12 @@ public class UserModel extends BaseModel {
 		this.gmail = gmail;
 	}
 
-	public String getFullname() {
-		return fullname;
+	public String getFull_name() {
+		return full_name;
 	}
 
-	public void setFullname(String fullname) {
-		this.fullname = fullname;
+	public void setFull_name(String full_name) {
+		this.full_name = full_name;
 	}
 
 	public Date getDob() {

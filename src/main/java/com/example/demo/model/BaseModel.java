@@ -19,8 +19,18 @@ public abstract class BaseModel {
     private Long is_deleted;
     
     private Long created_by;
+
+	private Date created_at;
     
-    public Long getId() {
+    private Long updated_by;
+    
+    private Date updated_at;
+    
+    private Long deleted_by;
+    
+    private Date deleted_at;
+
+	public Long getId() {
 		return id;
 	}
 
@@ -35,16 +45,6 @@ public abstract class BaseModel {
 	public void setStatus(Boolean status) {
 		this.status = status;
 	}
-
-	private Date created_at;
-    
-    private Long updated_by;
-    
-    private Date updated_at;
-    
-    private Long deleted_by;
-    
-    private Date deleted_at;
 
 	public Long getIs_deleted() {
 		return is_deleted;
@@ -101,5 +101,4 @@ public abstract class BaseModel {
 	public void setDeleted_at(Date deleted_at) {
 		this.deleted_at = deleted_at;
 	}
-    
 }
