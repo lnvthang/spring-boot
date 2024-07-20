@@ -16,7 +16,7 @@ public class UpdateUserDTO {
 
     private Boolean status;
 
-    private Long is_delete;
+    private Long is_deleted;
 
     public String getGmail() {
         return gmail;
@@ -50,11 +50,11 @@ public class UpdateUserDTO {
         this.status = status;
     }
 
-    public Long getIs_delete() {
-        return is_delete;
+    public Long getIs_deleted() {
+        return is_deleted;
     }
 
-    public void setIs_delete(Long is_delete) {
-        this.is_delete = is_delete;
+    public void setIs_deleted(Long is_delete) {
+        this.is_deleted = is_delete;
     }
 }

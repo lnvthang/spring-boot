@@ -49,7 +49,7 @@ public class UserServiceImpl {
             updatedUser.setFull_name(userDTO.getFull_name());
             updatedUser.setDob(userDTO.getDob());
             updatedUser.setStatus(userDTO.getStatus());
-            updatedUser.setIs_deleted(userDTO.getIs_delete());
+            updatedUser.setIs_deleted(userDTO.getIs_deleted());
             return genericService.save(updatedUser);
         } else {
             return null;

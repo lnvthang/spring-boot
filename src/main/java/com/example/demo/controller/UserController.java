@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.example.demo.dto.BaseResponse;
 import com.example.demo.dto.user.*;
@@ -28,7 +29,10 @@ public class UserController {
 	public BaseResponse<List<UserModel>> getUsersList() {
 		BaseResponse<List<UserModel>> response = new BaseResponse<>();
 		try {
-			List<UserModel> data = userService.findAll();
+			List<UserModel> data = userService.findAll()
+												.stream()
+												.filter(item -> item.getIs_deleted() == 0L)
+												.collect(Collectors.toList());
 			if (!data.isEmpty()) {
 				response.setData(data);
 			}
