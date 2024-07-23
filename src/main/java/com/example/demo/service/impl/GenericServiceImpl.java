@@ -17,7 +17,7 @@ public class GenericServiceImpl<T, ID> implements IGenericService<T, ID> {
 
 	@Override
 	public List<T> findAll() {
-		return (List<T>) repository.findAll();
+		return repository.findAll();
 	}
 
 	@Override
