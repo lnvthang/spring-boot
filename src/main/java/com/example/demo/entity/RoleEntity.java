@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -9,17 +9,17 @@ import java.util.Set;
 
 @Entity
 @Table(name = "role")
-public class RoleModel extends BaseModel implements GrantedAuthority {
+public class RoleEntity extends BaseEntity implements GrantedAuthority {
 
     private String role_name;
 
-    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private Set<UserRoleModel> userRoles = new HashSet<>();
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
+    private Set<UserRoleEntity> userRoles = new HashSet<>();
 
     @Override
     public String getAuthority() {
-        return role_name; // Tên của role chính là quyền hạn
+        return role_name;
     }
 
     public String getRole_name() {
@@ -30,11 +30,11 @@ public class RoleModel extends BaseModel implements GrantedAuthority {
         this.role_name = role_name;
     }
 
-    public Set<UserRoleModel> getUserRoles() {
+    public Set<UserRoleEntity> getUserRoles() {
         return userRoles;
     }
 
-    public void setUserRoles(Set<UserRoleModel> userRoles) {
+    public void setUserRoles(Set<UserRoleEntity> userRoles) {
         this.userRoles = userRoles;
     }
 }

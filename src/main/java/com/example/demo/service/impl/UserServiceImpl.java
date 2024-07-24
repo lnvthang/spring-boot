@@ -2,12 +2,8 @@ package com.example.demo.service.impl;
 
 import com.example.demo.dto.user.CreateUserDTO;
 import com.example.demo.dto.user.UpdateUserDTO;
-import com.example.demo.model.UserModel;
-
-import com.example.demo.repository.user.IUserRepository;
-import com.example.demo.service.IUserService;
+import com.example.demo.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -21,25 +17,22 @@ import static com.example.demo.util.Constants.WORKING;
 public class UserServiceImpl {
 
     @Autowired
-    private GenericServiceImpl<UserModel, Long> genericService;
+    private GenericServiceImpl<UserEntity, Long> genericService;
 
-    @Autowired
-    private IUserRepository userRepository;
-
-    public List<UserModel> findAll() {
-        List<UserModel> data =  genericService.findAll();
+    public List<UserEntity> findAll() {
+        List<UserEntity> data =  genericService.findAll();
         if (data.isEmpty()) {
             return null;
         }
         return data;
     }
 
-    public Optional<UserModel> findById(Long id) {
+    public Optional<UserEntity> findById(Long id) {
         return genericService.findById(id);
     }
 
-    public UserModel createUser(CreateUserDTO userDTO) {
-        UserModel createUser = new UserModel();
+    public UserEntity createUser(CreateUserDTO userDTO) {
+        UserEntity createUser = new UserEntity();
         createUser.setUsername(userDTO.getUsername());
         createUser.setPassword(userDTO.getPassword());
         createUser.setGmail(userDTO.getGmail());
@@ -50,10 +43,10 @@ public class UserServiceImpl {
         return genericService.save(createUser);
     }
 
-    public UserModel updateUser(Long id, UpdateUserDTO userDTO) {
-        Optional<UserModel> user = findById(id);
+    public UserEntity updateUser(Long id, UpdateUserDTO userDTO) {
+        Optional<UserEntity> user = findById(id);
         if (user.isPresent()) {
-            UserModel updatedUser = user.get();
+            UserEntity updatedUser = user.get();
             updatedUser.setGmail(userDTO.getGmail());
             updatedUser.setFull_name(userDTO.getFull_name());
             updatedUser.setDob(userDTO.getDob());
@@ -67,7 +60,7 @@ public class UserServiceImpl {
     }
 
     public Boolean deleteUser(Long id) {
-        Optional<UserModel> user = findById(id);
+        Optional<UserEntity> user = findById(id);
         if (user.isPresent()) {
             genericService.delete(id);
             return Boolean.TRUE;
@@ -75,10 +68,4 @@ public class UserServiceImpl {
             return Boolean.FALSE;
         }
     }
-
-    public UserModel loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
-    }
-
 }

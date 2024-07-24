@@ -1,9 +1,9 @@
 package com.example.demo.service;
 
-import com.example.demo.model.UserModel;
+import com.example.demo.entity.UserEntity;
 
 import java.util.Optional;
 
 public interface IUserService {
-    Optional<UserModel> findByUserName(String username);
+    Optional<UserEntity> findByUserName(String username);
 }

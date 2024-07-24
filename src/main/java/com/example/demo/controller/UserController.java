@@ -10,12 +10,14 @@ import com.example.demo.util.Validations;
 import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.model.UserModel;
+import com.example.demo.entity.UserEntity;
 
-@RestController
 @RequestMapping("/api/user")
+@RestController
 public class UserController {
 
 	@Autowired
@@ -26,10 +28,10 @@ public class UserController {
 
 
 	@GetMapping
-	public BaseResponse<List<UserModel>> getUsersList() {
-		BaseResponse<List<UserModel>> response = new BaseResponse<>();
+	public BaseResponse<List<UserEntity>> getUsersList() {
+		BaseResponse<List<UserEntity>> response = new BaseResponse<>();
 		try {
-			List<UserModel> data = userService.findAll()
+			List<UserEntity> data = userService.findAll()
 												.stream()
 												.filter(item -> item.getIs_deleted() == 0L)
 												.collect(Collectors.toList());
@@ -45,11 +47,27 @@ public class UserController {
 		return response;
 	}
 
-	@GetMapping("/{id}")
-	public BaseResponse<UserModel> getUserById(@PathVariable Long id) {
-		BaseResponse<UserModel> response = new BaseResponse<>();
+	@GetMapping("/me")
+	public BaseResponse<Object> authenticatedUser() {
+		BaseResponse<Object> response = new BaseResponse<>();
 		try {
-			UserModel data = userService.findById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build()).getBody();;
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			var data = authentication.getPrincipal();
+			response.setData(data);
+			response.setMessage("Successful");
+			response.setStatus(200L);
+		} catch (Exception e) {
+			response.setMessage(e.getMessage());
+			response.setStatus(500L);
+		}
+		return response;
+	}
+
+	@GetMapping("/{id}")
+	public BaseResponse<UserEntity> getUserById(@PathVariable Long id) {
+		BaseResponse<UserEntity> response = new BaseResponse<>();
+		try {
+			UserEntity data = userService.findById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build()).getBody();;
             response.setData(data);
             response.setMessage("Successful");
             response.setStatus(200L);
@@ -61,13 +79,13 @@ public class UserController {
 	}
 
 	@PostMapping
-	public BaseResponse<UserModel> createUser(@RequestBody CreateUserDTO userDTO) {
-		BaseResponse<UserModel> response = new BaseResponse<>();
+	public BaseResponse<UserEntity> createUser(@RequestBody CreateUserDTO userDTO) {
+		BaseResponse<UserEntity> response = new BaseResponse<>();
 		try {
 			if (validations.isEmailValid(userDTO.getGmail())) {
 				throw new ValidationException("Email is not valid");
 			}
-			UserModel data = userService.createUser(userDTO);
+			UserEntity data = userService.createUser(userDTO);
 			response.setData(data);
 			response.setMessage("Successful");
 			response.setStatus(200L);
@@ -79,13 +97,13 @@ public class UserController {
 	}
 
 	@PutMapping("/{id}")
-	public BaseResponse<UserModel> updateUser(@PathVariable Long id, @RequestBody UpdateUserDTO userDTO) {
-		BaseResponse<UserModel> response = new BaseResponse<>();
+	public BaseResponse<UserEntity> updateUser(@PathVariable Long id, @RequestBody UpdateUserDTO userDTO) {
+		BaseResponse<UserEntity> response = new BaseResponse<>();
 		try {
 			if (validations.isEmailValid(userDTO.getGmail())) {
 				throw new ValidationException("Email is not valid");
 			}
-			UserModel data = userService.updateUser(id, userDTO);
+			UserEntity data = userService.updateUser(id, userDTO);
 			response.setData(data);
 			response.setMessage("Successful");
 			response.setStatus(200L);

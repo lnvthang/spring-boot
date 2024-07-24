@@ -1,20 +1,15 @@
-package com.example.demo.model;
+package com.example.demo.entity;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.*;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(name = "user")
-public class UserModel extends BaseModel implements UserDetails {
+public class UserEntity extends BaseEntity implements UserDetails {
 
 	private String username;
 
@@ -26,17 +21,33 @@ public class UserModel extends BaseModel implements UserDetails {
 
 	private Date dob;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonManagedReference
-	private Set<UserRoleModel> userRoles = new HashSet<>();
+	@OneToMany(fetch = FetchType.EAGER)
+	private Set<UserRoleEntity> userRoles;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		Set<GrantedAuthority> authorities = new HashSet<>();
-		for (UserRoleModel userRole : userRoles) {
-			authorities.add(userRole.getRole());
-		}
-		return authorities;
+		return List.of();
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
 	}
 
 	public String getUsername() {
@@ -79,11 +90,11 @@ public class UserModel extends BaseModel implements UserDetails {
 		this.dob = dob;
 	}
 
-	public Set<UserRoleModel> getUserRoles() {
+	public Set<UserRoleEntity> getUserRoles() {
 		return userRoles;
 	}
 
-	public void setUserRoles(Set<UserRoleModel> userRoles) {
+	public void setUserRoles(Set<UserRoleEntity> userRoles) {
 		this.userRoles = userRoles;
 	}
 }

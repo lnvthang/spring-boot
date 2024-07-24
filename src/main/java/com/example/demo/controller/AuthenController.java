@@ -1,38 +1,46 @@
 package com.example.demo.controller;
 
-import com.example.demo.authen.JwtTokenProvider;
 import com.example.demo.dto.authen.LoginRequest;
+import com.example.demo.dto.authen.LoginResponse;
+import com.example.demo.entity.UserEntity;
+import com.example.demo.service.impl.AuthenticationService;
+import com.example.demo.service.impl.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@RequestMapping("/auth")
 @RestController
-@RequestMapping("/api")
 public class AuthenController {
 
     @Autowired
-    private AuthenticationManager authenticationManager;
+    private JwtService jwtService;
 
     @Autowired
-    private JwtTokenProvider tokenProvider;
+    private AuthenticationService authenticationService;
+
+//    @PostMapping("/signup")
+//    public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto) {
+//        User registeredUser = authenticationService.signup(registerUserDto);
+//
+//        return ResponseEntity.ok(registeredUser);
+//    }
 
     @PostMapping("/login")
-    public String authenticateUser(@RequestBody LoginRequest loginRequest) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.getUsername(),
-                        loginRequest.getPassword()
-                )
-        );
+    public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginRequest loginRequest) {
+        UserEntity authenticatedUser = authenticationService.authenticate(loginRequest);
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwtToken = jwtService.generateToken((UserDetails) authenticatedUser);
 
-        return tokenProvider.generateToken(authentication.getName());
+        LoginResponse loginResponse = new LoginResponse();
+        loginResponse.setToken(jwtToken);
+        loginResponse.setExpiresIn(jwtService.getExpirationTime());
+
+        return ResponseEntity.ok(loginResponse);
     }
+
 }
