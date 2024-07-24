@@ -1,10 +1,10 @@
 package com.example.demo.controller;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.example.demo.dto.BaseResponse;
-import com.example.demo.dto.user.*;
+import com.example.demo.dto.user.request.CreateUserDTO;
+import com.example.demo.dto.user.request.UpdateUserDTO;
+import com.example.demo.dto.user.response.UserListResponse;
+import com.example.demo.entity.UserEntity;
 import com.example.demo.service.impl.UserServiceImpl;
 import com.example.demo.util.Validations;
 import jakarta.validation.ValidationException;
@@ -14,7 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.entity.UserEntity;
+import java.util.List;
 
 @RequestMapping("/api/user")
 @RestController
@@ -28,13 +28,10 @@ public class UserController {
 
 
 	@GetMapping
-	public BaseResponse<List<UserEntity>> getUsersList() {
-		BaseResponse<List<UserEntity>> response = new BaseResponse<>();
+	public BaseResponse<List<UserListResponse>> getUsersList() {
+		BaseResponse<List<UserListResponse>> response = new BaseResponse<>();
 		try {
-			List<UserEntity> data = userService.findAll()
-												.stream()
-												.filter(item -> item.getIs_deleted() == 0L)
-												.collect(Collectors.toList());
+			List<UserListResponse> data = userService.findAll();
 			if (!data.isEmpty()) {
 				response.setData(data);
 			}

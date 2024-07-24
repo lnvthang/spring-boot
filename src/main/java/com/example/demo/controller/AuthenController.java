@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.authen.LoginRequest;
 import com.example.demo.dto.authen.LoginResponse;
+import com.example.demo.dto.user.request.CreateUserDTO;
 import com.example.demo.entity.UserEntity;
 import com.example.demo.service.impl.AuthenticationService;
 import com.example.demo.service.impl.JwtService;
@@ -23,12 +24,12 @@ public class AuthenController {
     @Autowired
     private AuthenticationService authenticationService;
 
-//    @PostMapping("/signup")
-//    public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto) {
-//        User registeredUser = authenticationService.signup(registerUserDto);
-//
-//        return ResponseEntity.ok(registeredUser);
-//    }
+    @PostMapping("/signup")
+    public ResponseEntity<Boolean> register(@RequestBody CreateUserDTO registerUserDto) {
+        UserEntity registeredUser = authenticationService.signup(registerUserDto);
+
+        return ResponseEntity.ok(Boolean.TRUE);
+    }
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginRequest loginRequest) {
