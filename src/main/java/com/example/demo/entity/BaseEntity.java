@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import java.util.Date;
+import java.util.UUID;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,24 +12,24 @@ import jakarta.persistence.MappedSuperclass;
 public abstract class BaseEntity {
 	
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 	
     private Boolean status;
 
-    private Long is_deleted;
+    private Long isdeleted;
     
-    private Long created_by;
+    private String createdby;
 
-	private Date created_at;
+	private Date createddate;
     
-    private Long updated_by;
+    private String updatedby;
     
-    private Date updated_at;
+    private Date updateddate;
     
-    private Long deleted_by;
+    private String deletedby;
     
-    private Date deleted_at;
+    private Date deleteddate;
 
 	public Long getId() {
 		return id;
@@ -46,59 +47,59 @@ public abstract class BaseEntity {
 		this.status = status;
 	}
 
-	public Long getIs_deleted() {
-		return is_deleted;
+	public Long getIsdeleted() {
+		return isdeleted;
 	}
 
-	public void setIs_deleted(Long is_deleted) {
-		this.is_deleted = is_deleted;
+	public void setIsdeleted(Long isdeleted) {
+		this.isdeleted = isdeleted;
 	}
 
-	public Long getCreated_by() {
-		return created_by;
+	public String getCreatedby() {
+		return createdby;
 	}
 
-	public void setCreated_by(Long created_by) {
-		this.created_by = created_by;
+	public void setCreatedby(String createdby) {
+		this.createdby = createdby;
 	}
 
-	public Date getCreated_at() {
-		return created_at;
+	public Date getCreateddate() {
+		return createddate;
 	}
 
-	public void setCreated_at(Date created_at) {
-		this.created_at = created_at;
+	public void setCreateddate(Date createddate) {
+		this.createddate = createddate;
 	}
 
-	public Long getUpdated_by() {
-		return updated_by;
+	public String getUpdatedby() {
+		return updatedby;
 	}
 
-	public void setUpdated_by(Long updated_by) {
-		this.updated_by = updated_by;
+	public void setUpdatedby(String updatedby) {
+		this.updatedby = updatedby;
 	}
 
-	public Date getUpdated_at() {
-		return updated_at;
+	public Date getUpdateddate() {
+		return updateddate;
 	}
 
-	public void setUpdated_at(Date updated_at) {
-		this.updated_at = updated_at;
+	public void setUpdateddate(Date updateddate) {
+		this.updateddate = updateddate;
 	}
 
-	public Long getDeleted_by() {
-		return deleted_by;
+	public String getDeletedby() {
+		return deletedby;
 	}
 
-	public void setDeleted_by(Long deleted_by) {
-		this.deleted_by = deleted_by;
+	public void setDeletedby(String deletedby) {
+		this.deletedby = deletedby;
 	}
 
-	public Date getDeleted_at() {
-		return deleted_at;
+	public Date getDeleteddate() {
+		return deleteddate;
 	}
 
-	public void setDeleted_at(Date deleted_at) {
-		this.deleted_at = deleted_at;
+	public void setDeleteddate(Date deleteddate) {
+		this.deleteddate = deleteddate;
 	}
 }

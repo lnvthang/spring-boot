@@ -9,21 +9,25 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(name = "user")
-public class UserEntity extends BaseEntity implements UserDetails {
+public class User extends BaseEntity implements UserDetails {
 
 	private String username;
 
 	private String password;
 
-	private String gmail;
+	private String mail;
 
-	private String full_name;
+	private String name;
+
+	private String fullname;
 
 	private Date dob;
 
-	@JsonManagedReference
-	@OneToMany(fetch = FetchType.EAGER)
-	private Set<UserRoleEntity> userRoles;
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(  name = "user_role",
+			joinColumns = @JoinColumn(name = "user_id"),
+			inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Set<Role> roles = new HashSet<>();
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -50,6 +54,7 @@ public class UserEntity extends BaseEntity implements UserDetails {
 		return true;
 	}
 
+	@Override
 	public String getUsername() {
 		return username;
 	}
@@ -58,6 +63,7 @@ public class UserEntity extends BaseEntity implements UserDetails {
 		this.username = username;
 	}
 
+	@Override
 	public String getPassword() {
 		return password;
 	}
@@ -66,20 +72,28 @@ public class UserEntity extends BaseEntity implements UserDetails {
 		this.password = password;
 	}
 
-	public String getGmail() {
-		return gmail;
+	public String getMail() {
+		return mail;
 	}
 
-	public void setGmail(String gmail) {
-		this.gmail = gmail;
+	public void setMail(String mail) {
+		this.mail = mail;
 	}
 
-	public String getFull_name() {
-		return full_name;
+	public String getName() {
+		return name;
 	}
 
-	public void setFull_name(String full_name) {
-		this.full_name = full_name;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getFullname() {
+		return fullname;
+	}
+
+	public void setFullname(String fullname) {
+		this.fullname = fullname;
 	}
 
 	public Date getDob() {
@@ -90,11 +104,11 @@ public class UserEntity extends BaseEntity implements UserDetails {
 		this.dob = dob;
 	}
 
-	public Set<UserRoleEntity> getUserRoles() {
-		return userRoles;
+	public Set<Role> getRoles() {
+		return roles;
 	}
 
-	public void setUserRoles(Set<UserRoleEntity> userRoles) {
-		this.userRoles = userRoles;
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
 	}
 }

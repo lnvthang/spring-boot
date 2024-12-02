@@ -4,7 +4,7 @@ import com.example.demo.dto.BaseResponse;
 import com.example.demo.dto.user.request.CreateUserDTO;
 import com.example.demo.dto.user.request.UpdateUserDTO;
 import com.example.demo.dto.user.response.UserListResponse;
-import com.example.demo.entity.UserEntity;
+import com.example.demo.entity.User;
 import com.example.demo.service.impl.UserServiceImpl;
 import com.example.demo.util.Validations;
 import jakarta.validation.ValidationException;
@@ -61,10 +61,10 @@ public class UserController {
 	}
 
 	@GetMapping("/{id}")
-	public BaseResponse<UserEntity> getUserById(@PathVariable Long id) {
-		BaseResponse<UserEntity> response = new BaseResponse<>();
+	public BaseResponse<User> getUserById(@PathVariable String id) {
+		BaseResponse<User> response = new BaseResponse<>();
 		try {
-			UserEntity data = userService.findById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build()).getBody();;
+			User data = userService.findById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build()).getBody();;
             response.setData(data);
             response.setMessage("Successful");
             response.setStatus(200L);
@@ -76,13 +76,13 @@ public class UserController {
 	}
 
 	@PostMapping
-	public BaseResponse<UserEntity> createUser(@RequestBody CreateUserDTO userDTO) {
-		BaseResponse<UserEntity> response = new BaseResponse<>();
+	public BaseResponse<User> createUser(@RequestBody CreateUserDTO userDTO) {
+		BaseResponse<User> response = new BaseResponse<>();
 		try {
 			if (validations.isEmailValid(userDTO.getGmail())) {
 				throw new ValidationException("Email is not valid");
 			}
-			UserEntity data = userService.createUser(userDTO);
+			User data = userService.createUser(userDTO);
 			response.setData(data);
 			response.setMessage("Successful");
 			response.setStatus(200L);
@@ -94,13 +94,13 @@ public class UserController {
 	}
 
 	@PutMapping("/{id}")
-	public BaseResponse<UserEntity> updateUser(@PathVariable Long id, @RequestBody UpdateUserDTO userDTO) {
-		BaseResponse<UserEntity> response = new BaseResponse<>();
+	public BaseResponse<User> updateUser(@PathVariable Long id, @RequestBody UpdateUserDTO userDTO) {
+		BaseResponse<User> response = new BaseResponse<>();
 		try {
 			if (validations.isEmailValid(userDTO.getGmail())) {
 				throw new ValidationException("Email is not valid");
 			}
-			UserEntity data = userService.updateUser(id, userDTO);
+			User data = userService.updateUser(id, userDTO);
 			response.setData(data);
 			response.setMessage("Successful");
 			response.setStatus(200L);
