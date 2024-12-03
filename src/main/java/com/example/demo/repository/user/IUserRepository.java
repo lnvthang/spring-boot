@@ -14,4 +14,6 @@ public interface IUserRepository extends IGenericRepository<User, Long> {
     boolean existsByUsername(String username);
 
     boolean existsByMail(String mail);
+
+    User findUserByMail(String mail);
 }

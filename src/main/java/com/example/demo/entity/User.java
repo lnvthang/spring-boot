@@ -1,114 +1,95 @@
 package com.example.demo.entity;
 
-import java.util.*;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
-public class User extends BaseEntity implements UserDetails {
+public class User extends BaseEntity {
 
-	private String username;
+    private String username;
 
-	private String password;
+    private String password;
 
-	private String mail;
+    private String mail;
 
-	private String name;
+    private String name;
 
-	private String fullname;
+    private String fullname;
 
-	private Date dob;
+    private Date dob;
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(  name = "user_role",
-			joinColumns = @JoinColumn(name = "user_id"),
-			inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private Set<Role> roles = new HashSet<>();
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return List.of();
-	}
+    public User(String email, String password) {
+        this.mail = email;
+        this.password = password;
+    }
 
-	@Override
-	public boolean isAccountNonExpired() {
-		return true;
-	}
+    public User() {
 
-	@Override
-	public boolean isAccountNonLocked() {
-		return true;
-	}
+    }
 
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return true;
-	}
+    public String getUsername() {
+        return username;
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return true;
-	}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-	@Override
-	public String getUsername() {
-		return username;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	@Override
-	public String getPassword() {
-		return password;
-	}
+    public String getMail() {
+        return mail;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
 
-	public String getMail() {
-		return mail;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setMail(String mail) {
-		this.mail = mail;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getFullname() {
+        return fullname;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
 
-	public String getFullname() {
-		return fullname;
-	}
+    public Date getDob() {
+        return dob;
+    }
 
-	public void setFullname(String fullname) {
-		this.fullname = fullname;
-	}
+    public void setDob(Date dob) {
+        this.dob = dob;
+    }
 
-	public Date getDob() {
-		return dob;
-	}
+    public Set<Role> getRoles() {
+        return roles;
+    }
 
-	public void setDob(Date dob) {
-		this.dob = dob;
-	}
-
-	public Set<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 }

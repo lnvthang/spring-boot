@@ -1,13 +1,12 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.dto.user.request.CreateUserDTO;
-import com.example.demo.dto.user.request.UpdateUserDTO;
-import com.example.demo.dto.user.response.UserListResponse;
+import com.example.demo.dto.request.CreateUserDTO;
+import com.example.demo.dto.request.UpdateUserDTO;
+import com.example.demo.dto.response.UserListResponse;
 import com.example.demo.entity.User;
 import com.example.demo.repository.user.IUserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,9 +20,6 @@ public class UserServiceImpl {
 
     @Autowired
     private ModelMapper modelMapper;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private IUserRepository userRepository;

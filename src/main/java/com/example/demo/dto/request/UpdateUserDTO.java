@@ -1,16 +1,10 @@
-package com.example.demo.dto.user.request;
+package com.example.demo.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 
 import java.util.Date;
 
-public class CreateUserDTO {
-
-    @NotBlank(message = "Username is mandatory")
-    private String username;
-
-    @NotBlank(message = "Password is mandatory")
-    private String password;
+public class UpdateUserDTO {
 
     @NotBlank(message = "Gmail is mandatory")
     private String gmail;
@@ -23,22 +17,6 @@ public class CreateUserDTO {
     private Boolean status;
 
     private Long is_deleted;
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public String getGmail() {
         return gmail;
@@ -76,7 +54,7 @@ public class CreateUserDTO {
         return is_deleted;
     }
 
-    public void setIs_deleted(Long is_deleted) {
-        this.is_deleted = is_deleted;
+    public void setIs_deleted(Long is_delete) {
+        this.is_deleted = is_delete;
     }
 }

@@ -1,17 +1,15 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.BaseResponse;
-import com.example.demo.dto.user.request.CreateUserDTO;
-import com.example.demo.dto.user.request.UpdateUserDTO;
-import com.example.demo.dto.user.response.UserListResponse;
+import com.example.demo.dto.request.CreateUserDTO;
+import com.example.demo.dto.request.UpdateUserDTO;
+import com.example.demo.dto.response.UserListResponse;
 import com.example.demo.entity.User;
 import com.example.demo.service.impl.UserServiceImpl;
 import com.example.demo.util.Validations;
 import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -48,9 +46,9 @@ public class UserController {
 	public BaseResponse<Object> authenticatedUser() {
 		BaseResponse<Object> response = new BaseResponse<>();
 		try {
-			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-			var data = authentication.getPrincipal();
-			response.setData(data);
+//			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//			var data = authentication.getPrincipal();
+			response.setData("abc");
 			response.setMessage("Successful");
 			response.setStatus(200L);
 		} catch (Exception e) {
@@ -126,5 +124,10 @@ public class UserController {
 			response.setStatus(500L);
 		}
 		return response;
+	}
+
+	@GetMapping(value = "/hello")
+	public String hello(){
+		return "hello world";
 	}
 }
