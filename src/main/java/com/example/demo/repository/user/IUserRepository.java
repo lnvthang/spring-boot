@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface IUserRepository extends IGenericRepository<User, Long> {
-    Optional<User> findByUsername(String username);
+   User findByUsername(String username);
 
     boolean existsByUsername(String username);
 

@@ -1,9 +1,9 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.BaseResponse;
-import com.example.demo.dto.request.CreateUserDTO;
-import com.example.demo.dto.request.UpdateUserDTO;
-import com.example.demo.dto.response.UserListResponse;
+import com.example.demo.dao.BaseResponse;
+import com.example.demo.dao.request.CreateUserDTO;
+import com.example.demo.dao.request.UpdateUserDTO;
+import com.example.demo.dao.response.UserListResponse;
 import com.example.demo.entity.User;
 import com.example.demo.service.impl.UserServiceImpl;
 import com.example.demo.util.Validations;

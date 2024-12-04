@@ -1,8 +1,8 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.dto.request.CreateUserDTO;
-import com.example.demo.dto.request.UpdateUserDTO;
-import com.example.demo.dto.response.UserListResponse;
+import com.example.demo.dao.request.CreateUserDTO;
+import com.example.demo.dao.request.UpdateUserDTO;
+import com.example.demo.dao.response.UserListResponse;
 import com.example.demo.entity.User;
 import com.example.demo.repository.user.IUserRepository;
 import org.modelmapper.ModelMapper;
@@ -37,8 +37,9 @@ public class UserServiceImpl {
     }
 
     public Optional<User> findById(String id) {
-       return Optional.of(userRepository.findByUsername(id).orElseThrow());
+//       return Optional.of(userRepository.findByUsername(id).orElseThrow());
 //        return genericService.findById(id);
+        return null;
     }
 
     public User createUser(CreateUserDTO userDTO) {

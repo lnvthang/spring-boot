@@ -1,10 +1,5 @@
-package com.example.demo.dto.response;
+package com.example.demo.dao.response;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
 public class UserListResponse {
     private Long id;
     private String username;

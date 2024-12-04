@@ -1,4 +1,4 @@
-package com.example.demo.dto;
+package com.example.demo.dao;
 
 public class BaseResponse<T> {
     private String message = "";
