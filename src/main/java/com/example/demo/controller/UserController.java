@@ -10,6 +10,8 @@ import com.example.demo.util.Validations;
 import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -46,9 +48,9 @@ public class UserController {
 	public BaseResponse<Object> authenticatedUser() {
 		BaseResponse<Object> response = new BaseResponse<>();
 		try {
-//			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//			var data = authentication.getPrincipal();
-			response.setData("abc");
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			Object data = authentication.getPrincipal();
+			response.setData(data);
 			response.setMessage("Successful");
 			response.setStatus(200L);
 		} catch (Exception e) {
