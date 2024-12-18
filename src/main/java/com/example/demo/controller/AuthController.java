@@ -1,8 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.dao.request.LoginRequest;
-import com.example.demo.dao.response.LoginResponse;
-import com.example.demo.entity.User;
+import com.example.demo.dto.request.LoginRequest;
+import com.example.demo.dto.response.LoginResponse;
 import com.example.demo.security.JwtUtil;
 import com.example.demo.security.TokenBlacklistService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,13 +32,10 @@ public class AuthController {
         try {
             Authentication authentication =
                     authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
-            String email = authentication.getName();
-            User user = new User();
-            user.setMail(email);
-            String token = jwtUtil.createToken(user);
-            LoginResponse loginResponse = new LoginResponse(email, token);
+            String mail = authentication.getName();
+            String token = jwtUtil.createToken(mail);
+            LoginResponse loginResponse = new LoginResponse(mail, token);
             return ResponseEntity.ok(loginResponse);
-
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
         }

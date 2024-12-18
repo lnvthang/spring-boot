@@ -1,4 +1,4 @@
-package com.example.demo.dao.request;
+package com.example.demo.dto.request;
 
 public class LoginRequest {
     private String email;

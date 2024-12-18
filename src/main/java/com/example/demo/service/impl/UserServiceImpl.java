@@ -1,10 +1,10 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.dao.request.CreateUserDTO;
-import com.example.demo.dao.request.UpdateUserDTO;
-import com.example.demo.dao.response.UserListResponse;
+import com.example.demo.dto.request.CreateUserDTO;
+import com.example.demo.dto.request.UpdateUserDTO;
+import com.example.demo.dto.response.UserListResponse;
 import com.example.demo.entity.User;
-import com.example.demo.repository.user.IUserRepository;
+import com.example.demo.repository.IUserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ public class UserServiceImpl {
     private IUserRepository userRepository;
 
     public List<UserListResponse> findAll() {
-        List<User> data =  genericService.findAll();
+        List<User> data = genericService.findAll();
         if (data.isEmpty()) {
             return null;
         }

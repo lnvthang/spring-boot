@@ -10,6 +10,8 @@ public class Constants {
     public static final String TOKEN_HEADER = "Authorization";
 
     public static final String TOKEN_PREFIX = "Bearer ";
+
+    public static final String[] EXCLUDED_PATHS = {"/api/auth/login"};
 }
 
 

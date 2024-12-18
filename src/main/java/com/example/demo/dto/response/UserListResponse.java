@@ -1,4 +1,4 @@
-package com.example.demo.dao.response;
+package com.example.demo.dto.response;
 
 public class UserListResponse {
     private Long id;
